@@ -97,22 +97,29 @@ class FleetEaseAPITester:
         """Test user login with existing credentials"""
         print("\n=== Testing Auth - Login ===")
         
+        # Generate unique email for login test
+        unique_id = uuid.uuid4().hex[:8]
+        login_email = f"login.test.{unique_id}@example.com"
+        
         # Try to login with a test user (we'll create one first)
         login_data = {
-            "email": "test.user@example.com",
+            "email": login_email,
             "password": "Test1234"
         }
         
         # First register the test user
         register_data = {
-            "name": "Test User",
-            "email": "test.user@example.com",
-            "phone": "5551234567",
+            "name": "Login Test User",
+            "email": login_email,
+            "phone": f"555123{unique_id[:4]}",
             "password": "Test1234"
         }
         
         # Register first
         reg_response = self.make_request("POST", "/auth/register", register_data)
+        if not reg_response or reg_response.status_code != 200:
+            self.log_test("User Login", False, "Failed to register test user for login test")
+            return
         
         # Now try login
         response = self.make_request("POST", "/auth/login", login_data)
