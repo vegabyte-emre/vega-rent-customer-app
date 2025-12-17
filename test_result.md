@@ -364,12 +364,12 @@ frontend:
 metadata:
   created_by: "main_agent"
   version: "1.0"
-  test_sequence: 1
+  test_sequence: 2
   run_ui: false
 
 test_plan:
   current_focus:
-    - "Backend API Tests"
+    - "Backend API Tests - COMPLETED"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
