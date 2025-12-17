@@ -131,6 +131,9 @@ backend:
       - working: true
         agent: "main"
         comment: "POST /api/auth/login endpoint çalışıyor"
+      - working: true
+        agent: "testing"
+        comment: "Login API tested successfully - proper authentication, session token generation, and error handling for invalid credentials"
 
   - task: "Google OAuth Callback"
     implemented: true
@@ -143,6 +146,9 @@ backend:
       - working: "NA"
         agent: "main"
         comment: "POST /api/auth/google/callback endpoint - requires real Google auth"
+      - working: "NA"
+        agent: "testing"
+        comment: "Google OAuth callback not tested - requires external Google authentication service integration"
 
   - task: "Vehicles API"
     implemented: true
@@ -155,6 +161,9 @@ backend:
       - working: true
         agent: "main"
         comment: "GET /api/vehicles endpoint çalışıyor - filtreleme ve sıralama destekli"
+      - working: true
+        agent: "testing"
+        comment: "Vehicles API fully tested - list endpoint with all filters (segment, brand, transmission, fuel_type, price range), vehicle detail endpoint, proper response format and data validation"
 
   - task: "Reservations API"
     implemented: true
@@ -167,6 +176,9 @@ backend:
       - working: true
         agent: "main"
         comment: "POST/GET/DELETE /api/reservations endpoints çalışıyor"
+      - working: true
+        agent: "testing"
+        comment: "Reservations API comprehensively tested - CRUD operations (create, list, detail, cancel), price calculation, extras handling, driver info validation, proper authentication required"
 
   - task: "Payment API"
     implemented: true
@@ -179,6 +191,9 @@ backend:
       - working: true
         agent: "main"
         comment: "POST /api/reservations/{id}/pay - mock payment çalışıyor"
+      - working: true
+        agent: "testing"
+        comment: "Payment API tested successfully - **mocked** payment processing, status updates (pending to paid/confirmed), notification generation after payment"
 
   - task: "Notifications API"
     implemented: true
@@ -191,6 +206,9 @@ backend:
       - working: true
         agent: "main"
         comment: "GET /api/notifications endpoint çalışıyor"
+      - working: true
+        agent: "testing"
+        comment: "Notifications API fully tested - list notifications, unread count, mark individual/all as read, proper notification creation on reservation events"
 
   - task: "Locations API"
     implemented: true
@@ -203,6 +221,9 @@ backend:
       - working: true
         agent: "main"
         comment: "GET /api/locations endpoint çalışıyor"
+      - working: true
+        agent: "testing"
+        comment: "Locations API tested successfully - list all locations, city filter functionality, proper response format with location details"
 
   - task: "Campaigns API"
     implemented: true
@@ -215,6 +236,9 @@ backend:
       - working: true
         agent: "main"
         comment: "GET /api/campaigns endpoint çalışıyor"
+      - working: true
+        agent: "testing"
+        comment: "Campaigns API tested successfully - active campaigns retrieval, proper date filtering for valid campaigns"
 
 frontend:
   - task: "Splash Screen"
