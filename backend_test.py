@@ -277,6 +277,50 @@ class FleetEaseAPITester:
             error_msg = response.text if response else "No response"
             self.log_test("Reservation Payment", False, f"Status: {response.status_code if response else 'None'}, Error: {error_msg}")
     
+    def test_reservation_cancel(self):
+        """Test reservation cancellation"""
+        print("\n=== Testing Reservations - Cancel ===")
+        
+        if not self.session_token:
+            self.log_test("Cancel Reservation", False, "No session token available")
+            return
+            
+        # Create a new reservation to cancel
+        pickup_date = datetime.now() + timedelta(days=5)
+        return_date = pickup_date + timedelta(days=2)
+        
+        reservation_data = {
+            "vehicle_id": "v002",
+            "pickup_date": pickup_date.isoformat() + "Z",
+            "return_date": return_date.isoformat() + "Z",
+            "pickup_location": "Ankara Esenboğa Havalimanı",
+            "return_location": "Ankara Esenboğa Havalimanı",
+            "extras": [],
+            "driver_info": {
+                "tc_kimlik": "98765432109",
+                "ehliyet_no": "XYZ789",
+                "ehliyet_sinifi": "B",
+                "ehliyet_tarihi": "2019-05-15"
+            }
+        }
+        
+        # Create reservation
+        create_response = self.make_request("POST", "/reservations", reservation_data)
+        if not create_response or create_response.status_code != 200:
+            self.log_test("Cancel Reservation", False, "Failed to create reservation for cancellation test")
+            return
+            
+        cancel_reservation_id = create_response.json().get("reservation_id")
+        
+        # Now cancel it
+        response = self.make_request("DELETE", f"/reservations/{cancel_reservation_id}")
+        if response and response.status_code == 200:
+            result = response.json()
+            self.log_test("Cancel Reservation", True, f"Cancellation successful: {result.get('message')}")
+        else:
+            error_msg = response.text if response else "No response"
+            self.log_test("Cancel Reservation", False, f"Status: {response.status_code if response else 'None'}, Error: {error_msg}")
+    
     def test_notifications(self):
         """Test notifications endpoints"""
         print("\n=== Testing Notifications ===")
