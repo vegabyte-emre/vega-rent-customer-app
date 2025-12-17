@@ -422,6 +422,7 @@ class FleetEaseAPITester:
         self.test_reservations_list()
         self.test_reservation_detail()
         self.test_reservation_payment()
+        self.test_reservation_cancel()
         self.test_notifications()
         self.test_locations()
         self.test_campaigns()
