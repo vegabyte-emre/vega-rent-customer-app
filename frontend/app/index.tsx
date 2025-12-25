@@ -17,8 +17,10 @@ export default function SplashScreen() {
   const [typedText, setTypedText] = useState('');
   const [showTagline, setShowTagline] = useState(false);
   const [taglineOpacity] = useState(new Animated.Value(0));
+  const [showCursor, setShowCursor] = useState(true);
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const loaderWidth = useRef(new Animated.Value(0)).current;
+  const cursorOpacity = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     // Start animations
@@ -53,6 +55,22 @@ export default function SplashScreen() {
       ])
     ).start();
 
+    // Blinking cursor animation
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(cursorOpacity, {
+          toValue: 0,
+          duration: 400,
+          useNativeDriver: true,
+        }),
+        Animated.timing(cursorOpacity, {
+          toValue: 1,
+          duration: 400,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
     // Typewriter effect
     let currentIndex = 0;
     const typeInterval = setInterval(() => {
@@ -61,6 +79,7 @@ export default function SplashScreen() {
         currentIndex++;
       } else {
         clearInterval(typeInterval);
+        setShowCursor(false);
         setShowTagline(true);
         Animated.timing(taglineOpacity, {
           toValue: 1,
@@ -68,7 +87,7 @@ export default function SplashScreen() {
           useNativeDriver: true,
         }).start();
       }
-    }, 100);
+    }, 120);
 
     // Loader animation
     Animated.timing(loaderWidth, {

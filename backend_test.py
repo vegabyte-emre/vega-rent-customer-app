@@ -11,7 +11,7 @@ import uuid
 import sys
 
 # Backend URL from frontend .env
-BACKEND_URL = "https://carsforhire.preview.emergentagent.com/api"
+BACKEND_URL = "https://mobility-preview.preview.emergentagent.com/api"
 
 class FleetEaseAPITester:
     def __init__(self):
