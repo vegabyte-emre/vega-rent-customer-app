@@ -22,8 +22,7 @@ export default {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#1E3A8A"
       },
-      package: process.env.PACKAGE_NAME || "com.vegarent.customer",
-      edgeToEdgeEnabled: true
+      package: process.env.PACKAGE_NAME || "com.vegarent.customer"
     },
     web: {
       bundler: "metro",
