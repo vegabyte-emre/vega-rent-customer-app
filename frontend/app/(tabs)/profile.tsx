@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, Switch } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, Switch, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuthStore } from '../../store/authStore';
 import { COLORS, SPACING, FONT_SIZES, BORDER_RADIUS, SHADOWS } from '../../constants/theme';
+
+const COMPANY_NAME = "Vega Rent";
 
 interface MenuItemProps {
   icon: keyof typeof Ionicons.glyphMap;
@@ -62,22 +64,26 @@ export default function ProfileScreen() {
         <View style={styles.header}>
           <Text style={styles.title}>Profil</Text>
         </View>
+        
         <View style={styles.guestContainer}>
           <View style={styles.guestIconContainer}>
-            <Ionicons name="person-outline" size={64} color={COLORS.textMuted} />
+            <Ionicons name="person" size={50} color={COLORS.primary} />
           </View>
           <Text style={styles.guestTitle}>Hoş Geldiniz!</Text>
-          <Text style={styles.guestText}>Profilinizi görmek ve yönetmek için giriş yapın veya kayıt olun</Text>
+          <Text style={styles.guestText}>
+            {COMPANY_NAME} üyesi olun, özel fırsatlardan yararlanın
+          </Text>
           <TouchableOpacity style={styles.loginButton} onPress={() => router.push('/(auth)/login')}>
+            <Ionicons name="log-in-outline" size={20} color={COLORS.white} />
             <Text style={styles.loginButtonText}>Giriş Yap</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.registerButton} onPress={() => router.push('/(auth)/register')}>
+            <Ionicons name="person-add-outline" size={20} color={COLORS.primary} />
             <Text style={styles.registerButtonText}>Ücretsiz Kayıt Ol</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Settings for guest users */}
-        <ScrollView style={styles.scrollView}>
+        <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Uygulama</Text>
             <View style={styles.menuCard}>
@@ -98,12 +104,29 @@ export default function ProfileScreen() {
           </View>
 
           <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Destek</Text>
+            <View style={styles.menuCard}>
+              <MenuItem icon="help-circle-outline" title="Sık Sorulan Sorular" onPress={() => {}} />
+              <MenuItem icon="chatbubbles-outline" title="Canlı Destek" onPress={() => {}} />
+              <MenuItem icon="call-outline" title="Bizi Arayın" subtitle="0850 123 4567" onPress={() => {}} />
+            </View>
+          </View>
+
+          <View style={styles.section}>
             <Text style={styles.sectionTitle}>Yasal</Text>
             <View style={styles.menuCard}>
               <MenuItem icon="document-text-outline" title="Kullanım Koşulları" onPress={() => {}} />
               <MenuItem icon="shield-checkmark-outline" title="Gizlilik Politikası" onPress={() => {}} />
               <MenuItem icon="information-circle-outline" title="KVKK Aydınlatma Metni" onPress={() => {}} />
             </View>
+          </View>
+
+          <View style={styles.footerInfo}>
+            <View style={styles.footerLogo}>
+              <Ionicons name="car-sport" size={18} color={COLORS.primary} />
+              <Text style={styles.footerBrand}>{COMPANY_NAME}</Text>
+            </View>
+            <Text style={styles.versionText}>Versiyon 1.0.0</Text>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -120,21 +143,16 @@ export default function ProfileScreen() {
         {/* Profile Card */}
         <View style={styles.profileCard}>
           <View style={styles.avatarContainer}>
-            {user?.picture ? (
-              <View style={styles.avatar}>
-                <Text style={styles.avatarText}>{user.name.charAt(0).toUpperCase()}</Text>
-              </View>
-            ) : (
-              <View style={styles.avatar}>
-                <Text style={styles.avatarText}>{user?.name.charAt(0).toUpperCase()}</Text>
-              </View>
-            )}
+            <View style={styles.avatar}>
+              <Text style={styles.avatarText}>{user?.name.charAt(0).toUpperCase()}</Text>
+            </View>
             <TouchableOpacity style={styles.editAvatarButton}>
               <Ionicons name="camera" size={14} color={COLORS.white} />
             </TouchableOpacity>
           </View>
           <Text style={styles.userName}>{user?.name}</Text>
           <Text style={styles.userEmail}>{user?.email}</Text>
+          {user?.phone && <Text style={styles.userPhone}>{user.phone}</Text>}
           <TouchableOpacity style={styles.editProfileButton}>
             <Ionicons name="create-outline" size={16} color={COLORS.primary} />
             <Text style={styles.editProfileText}>Profili Düzenle</Text>
@@ -215,7 +233,13 @@ export default function ProfileScreen() {
           </View>
         </View>
 
-        <Text style={styles.version}>FleetEase v1.0.0</Text>
+        <View style={styles.footerInfo}>
+          <View style={styles.footerLogo}>
+            <Ionicons name="car-sport" size={18} color={COLORS.primary} />
+            <Text style={styles.footerBrand}>{COMPANY_NAME}</Text>
+          </View>
+          <Text style={styles.versionText}>Versiyon 1.0.0</Text>
+        </View>
 
         <View style={{ height: SPACING.xxl }} />
       </ScrollView>
@@ -249,10 +273,10 @@ const styles = StyleSheet.create({
     ...SHADOWS.md,
   },
   guestIconContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: COLORS.background,
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    backgroundColor: COLORS.primary + '15',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: SPACING.md,
@@ -270,12 +294,15 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.lg,
   },
   loginButton: {
+    flexDirection: 'row',
     width: '100%',
     paddingVertical: SPACING.md,
     backgroundColor: COLORS.primary,
     borderRadius: BORDER_RADIUS.lg,
     alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: SPACING.sm,
+    gap: SPACING.sm,
   },
   loginButtonText: {
     color: COLORS.white,
@@ -283,6 +310,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZES.md,
   },
   registerButton: {
+    flexDirection: 'row',
     width: '100%',
     paddingVertical: SPACING.md,
     backgroundColor: COLORS.transparent,
@@ -290,6 +318,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.primary,
     alignItems: 'center',
+    justifyContent: 'center',
+    gap: SPACING.sm,
   },
   registerButtonText: {
     color: COLORS.primary,
@@ -343,6 +373,11 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZES.sm,
     color: COLORS.textLight,
     marginTop: SPACING.xs,
+  },
+  userPhone: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textLight,
+    marginTop: 2,
   },
   editProfileButton: {
     flexDirection: 'row',
@@ -413,10 +448,23 @@ const styles = StyleSheet.create({
     color: COLORS.textLight,
     marginTop: 2,
   },
-  version: {
-    textAlign: 'center',
-    fontSize: FONT_SIZES.sm,
+  footerInfo: {
+    alignItems: 'center',
+    paddingVertical: SPACING.xl,
+  },
+  footerLogo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.xs,
+    marginBottom: SPACING.xs,
+  },
+  footerBrand: {
+    fontSize: FONT_SIZES.md,
+    fontWeight: '700',
+    color: COLORS.primary,
+  },
+  versionText: {
+    fontSize: FONT_SIZES.xs,
     color: COLORS.textMuted,
-    marginTop: SPACING.lg,
   },
 });

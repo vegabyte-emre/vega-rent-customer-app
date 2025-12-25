@@ -7,6 +7,8 @@ import { Button, Input } from '../../components';
 import { useAuthStore } from '../../store/authStore';
 import { COLORS, SPACING, FONT_SIZES, BORDER_RADIUS } from '../../constants/theme';
 
+const COMPANY_NAME = "Vega Rent";
+
 export default function RegisterScreen() {
   const router = useRouter();
   const { register, isLoading, clearError } = useAuthStore();
@@ -102,6 +104,10 @@ export default function RegisterScreen() {
           </View>
 
           <View style={styles.header}>
+            <View style={styles.logoContainer}>
+              <Ionicons name="car-sport" size={35} color={COLORS.primary} />
+            </View>
+            <Text style={styles.brandName}>{COMPANY_NAME}</Text>
             <Text style={styles.title}>Hesap Oluştur</Text>
             <Text style={styles.subtitle}>Hızlı ve kolay kayıt olun</Text>
           </View>
@@ -219,7 +225,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: SPACING.lg,
+    marginBottom: SPACING.md,
   },
   backButton: {
     padding: SPACING.sm,
@@ -236,7 +242,23 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   header: {
+    alignItems: 'center',
     marginBottom: SPACING.xl,
+  },
+  logoContainer: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: COLORS.primary + '15',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: SPACING.sm,
+  },
+  brandName: {
+    fontSize: FONT_SIZES.lg,
+    fontWeight: '700',
+    color: COLORS.primary,
+    marginBottom: SPACING.sm,
   },
   title: {
     fontSize: FONT_SIZES.hero,
@@ -245,7 +267,7 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.xs,
   },
   subtitle: {
-    fontSize: FONT_SIZES.lg,
+    fontSize: FONT_SIZES.md,
     color: COLORS.textLight,
   },
   form: {
