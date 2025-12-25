@@ -7,9 +7,10 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
 import { Button, Input } from '../../components';
 import { useAuthStore } from '../../store/authStore';
-import { COLORS, SPACING, FONT_SIZES, BORDER_RADIUS } from '../../constants/theme';
+import { COLORS, SPACING, FONT_SIZES, BORDER_RADIUS, SHADOWS } from '../../constants/theme';
 
 const API_URL = process.env.EXPO_PUBLIC_BACKEND_URL || '';
+const COMPANY_NAME = "Vega Rent";
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -58,7 +59,6 @@ export default function LoginScreen() {
       const result = await WebBrowser.openAuthSessionAsync(authUrl, redirectUrl);
       
       if (result.type === 'success' && result.url) {
-        // Extract session_id from URL
         const url = result.url;
         let sessionId = null;
         
@@ -100,8 +100,9 @@ export default function LoginScreen() {
 
           <View style={styles.header}>
             <View style={styles.logoContainer}>
-              <Ionicons name="car-sport" size={50} color={COLORS.primary} />
+              <Ionicons name="car-sport" size={45} color={COLORS.primary} />
             </View>
+            <Text style={styles.brandName}>{COMPANY_NAME}</Text>
             <Text style={styles.title}>Hoş Geldiniz</Text>
             <Text style={styles.subtitle}>Hesabınıza giriş yapın</Text>
           </View>
@@ -191,17 +192,23 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    marginTop: SPACING.xl,
+    marginTop: SPACING.lg,
     marginBottom: SPACING.xl,
   },
   logoContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 90,
+    height: 90,
+    borderRadius: 45,
     backgroundColor: COLORS.primary + '15',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: SPACING.lg,
+    marginBottom: SPACING.md,
+  },
+  brandName: {
+    fontSize: FONT_SIZES.xl,
+    fontWeight: '700',
+    color: COLORS.primary,
+    marginBottom: SPACING.sm,
   },
   title: {
     fontSize: FONT_SIZES.hero,
@@ -210,7 +217,7 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.xs,
   },
   subtitle: {
-    fontSize: FONT_SIZES.lg,
+    fontSize: FONT_SIZES.md,
     color: COLORS.textLight,
   },
   form: {
@@ -253,6 +260,7 @@ const styles = StyleSheet.create({
     borderRadius: BORDER_RADIUS.lg,
     paddingVertical: SPACING.md,
     gap: SPACING.md,
+    ...SHADOWS.sm,
   },
   googleButtonText: {
     fontSize: FONT_SIZES.md,
