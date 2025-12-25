@@ -138,7 +138,9 @@ export default function SplashScreen() {
         
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{typedText}</Text>
-          <View style={styles.cursor} />
+          {showCursor && (
+            <Animated.View style={[styles.cursor, { opacity: cursorOpacity }]} />
+          )}
         </View>
         
         {showTagline && (
