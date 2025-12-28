@@ -1,8 +1,10 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
+import Constants from 'expo-constants';
 
-const API_URL = process.env.EXPO_PUBLIC_BACKEND_URL || '';
+// Get API URL from app.config.js extra field (set during build)
+const API_URL = Constants.expoConfig?.extra?.API_URL || 'http://localhost:8001';
 
 const api = axios.create({
   baseURL: `${API_URL}/api`,
