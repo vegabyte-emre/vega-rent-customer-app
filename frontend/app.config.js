@@ -48,12 +48,13 @@ export default {
       typedRoutes: true
     },
     extra: {
-      API_URL: process.env.API_URL || "https://api.example.com",
-      COMPANY_NAME: process.env.COMPANY_NAME || "Vega Rent",
-      eas: {
-        projectId: "11d08a0d-b759-4489-9e3f-fca7161a7029"
-      }
-    },
+  API_URL: process.env.API_URL || 'http://localhost:8001',
+  COMPANY_NAME: process.env.COMPANY_NAME || 'Rent A Car',
+  COMPANY_CODE: process.env.COMPANY_CODE || 'default',
+  eas: {
+    projectId: '...',
+  },
+},
     owner: "emrenasir"
   }
 };
