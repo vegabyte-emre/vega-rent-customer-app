@@ -1,3 +1,4 @@
+import { APP_VERSION } from '../../constants/version';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, Switch, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -126,7 +127,7 @@ export default function ProfileScreen() {
               <Ionicons name="car-sport" size={18} color={COLORS.primary} />
               <Text style={styles.footerBrand}>{COMPANY_NAME}</Text>
             </View>
-            <Text style={styles.versionText}>Versiyon 1.0.0</Text>
+            <Text style={styles.versionText}>Versiyon {APP_VERSION}</Text>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -238,7 +239,7 @@ export default function ProfileScreen() {
             <Ionicons name="car-sport" size={18} color={COLORS.primary} />
             <Text style={styles.footerBrand}>{COMPANY_NAME}</Text>
           </View>
-          <Text style={styles.versionText}>Versiyon 1.0.0</Text>
+          <Text style={styles.versionText}>Versiyon {APP_VERSION}</Text>
         </View>
 
         <View style={{ height: SPACING.xxl }} />
